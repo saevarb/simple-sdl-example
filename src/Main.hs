@@ -9,13 +9,16 @@ import SDL.Vect
 import SDL (($=))
 import qualified SDL
 import Data.List (foldl')
-import SDL.Raw.Timer as SDL
+import SDL.Raw.Timer as SDL hiding (delay)
 import Text.Pretty.Simple
 
 -- import Paths_simple-sdl-example(getDataFileName)
 
 screenWidth, screenHeight :: CInt
 (screenWidth, screenHeight) = (640, 480)
+
+frameLimit :: Int
+frameLimit = 60
 
 -- This is our game world. It only consists of one lonely guy
 -- who has a position and a velocity
@@ -132,6 +135,11 @@ main = do
         let drawColor = SDL.rendererDrawColor renderer
         drawColor $= V4 255 255 255 0
         SDL.fillRect renderer . Just $ SDL.Rectangle (truncate <$> position newWorld) (V2 50 100)
+
+        -- My attempt at an FPS limit. I don't write games so it is possible this is incorrect
+        let frameDelay = 1000 / fromIntegral frameLimit
+        when (delta < frameDelay) $ do
+            SDL.delay (truncate $ frameDelay - delta)
 
         SDL.present renderer
         unless quit $ loop now newWorld
