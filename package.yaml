@@ -1,0 +1,24 @@
+name:                simple-sdl-example
+version:             0.1.0.0
+#synopsis:
+#description:
+homepage:            https://github.com/githubuser/simple-sdl-example#readme
+license:             BSD3
+author:              Author name here
+maintainer:          example@example.com
+copyright:           2018 Author name here
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+  - sdl2
+  - pretty-simple
+
+ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N
+
+executables:
+  simple-sdl-example:
+    source-dirs:      src
+    main:             Main.hs
